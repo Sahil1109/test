@@ -1,0 +1,16 @@
+name: frontend:test
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'test/**'
+
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        run: echo TEST

@@ -1,0 +1,29 @@
+name: deploy:review
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.main.outputs.test }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Deploy contracts
+        id: main
+        run: |
+          echo "::set-output name=test::true"
+      - name: Run Project A
+        if: steps.main.outputs.test == 'true'
+        run: |
+          echo Value ${{steps.main.outputs.test}}
+          echo Boolean ${{steps.main.outputs.test == 'true'}}
+  deploy-uat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          echo Value "${{needs.deploy-prod.outputs.output1}}"
